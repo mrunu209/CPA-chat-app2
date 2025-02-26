@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat App</title>
+    <link rel="stylesheet" href="styles.css"> <!-- External CSS -->
+</head>
+<body>
+
+    <!-- Registration Box -->
+    <div id="registerBox">
+        <h2>Enter Your Name</h2>
+        <input type="text" id="nameInput" placeholder="Enter name...">
+        <button id="startChatBtn" class="btn">Start Chat</button>
+    </div>
+
+    <!-- Chat Container -->
+    <div id="chatContainer" style="display: none;">
+        <h2>Welcome, <span id="userName"></span></h2>
+        <button id="aiButton" class="btn">AI Tool</button>
+        <button id="musicButton" class="btn">Music Player</button>
+        <button id="logoutBtn" class="btn">Logout</button>
+
+        <!-- Chat Box -->
+        <div id="chatBox">
+            <div id="messages"></div>
+            <input type="text" id="messageInput" placeholder="Type a message...">
+            <button id="sendMessageBtn">Send</button>
+        </div>
+    </div>
+
+    <!-- AI Floating Box -->
+    <div id="aiBox" class="floating-box" style="display: none;">
+        <button id="closeAiBox" class="close-btn">X</button>
+        <h3>AI Assistant</h3>
+        <p>Ask AI for ideas, letters, etc.</p>
+    </div>
+
+    <!-- Music Floating Box -->
+    <div id="musicBox" class="floating-box" style="display: none;">
+        <button id="closeMusicBox" class="close-btn">X</button>
+        <h3>Music Player</h3>
+        <p>Play YouTube & Spotify music</p>
+    </div>
+
+    <!-- External Scripts -->
+    <script src="firebase-config.js"></script>  <!-- Firebase setup -->
+    <script src="script.js"></script>          <!-- Main app logic -->
+    <script src="ai.js"></script>              <!-- AI feature -->
+
+    <script>
+        // Fix: Prevent looking for chat.html and keep everything in index.html
+        document.getElementById("startChatBtn").addEventListener("click", function () {
+            let name = document.getElementById("nameInput").value;
+            if (name.trim() !== "") {
+                localStorage.setItem("username", name);
+                document.getElementById("userName").innerText = name;
+                document.getElementById("registerBox").style.display = "none";
+                document.getElementById("chatContainer").style.display = "block";
+            }
+        });
+
+        // Logout to re-enter name
+        document.getElementById("logoutBtn").addEventListener("click", function () {
+            localStorage.removeItem("username");
+            document.getElementById("chatContainer").style.display = "none";
+            document.getElementById("registerBox").style.display = "block";
+        });
+
+        // Auto-login if username is stored
+        window.onload = function () {
+            let storedName = localStorage.getItem("username");
+            if (storedName) {
+                document.getElementById("userName").innerText = storedName;
+                document.getElementById("registerBox").style.display = "none";
+                document.getElementById("chatContainer").style.display = "block";
+            }
+        };
+    </script>
+
+</body>
+</html>

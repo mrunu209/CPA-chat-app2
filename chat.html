@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <h2>Welcome, <span id="userName"></span></h2>
+    <button id="aiButton" class="btn">AI Tool</button>
+    <button id="musicButton" class="btn">Music Player</button>
+    <button id="logoutBtn" class="btn">Logout</button>
+
+    <!-- Chat Box -->
+    <div id="chatBox">
+        <div id="messages"></div>
+        <input type="text" id="messageInput" placeholder="Type a message...">
+        <button id="sendMessageBtn">Send</button>
+    </div>
+
+    <script src="firebase-config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        // Show stored username
+        window.onload = function () {
+            let storedName = localStorage.getItem("username");
+            if (!storedName) {
+                window.location.href = "index.html"; // Redirect if no name found
+            } else {
+                document.getElementById("userName").innerText = storedName;
+            }
+        };
+    </script>
+
+</body>
+</html>
